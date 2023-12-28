@@ -8,7 +8,7 @@ import java.util.List;
 /**
  *
  * This solution avoids backtracking to strike frames requiring bonus upgrade as well their retrospective subsequent frame downstream score propagation.
- * This leads to main functional downside it only returns the latest frame score correctly. It won't return historical frame score
+ * This leads to main functional downside - it only returns the latest frame score correctly. It won't return historical frame score
  * correctly(even if we stored frame scores). The upside is that logic is very simple as it only follows the patterns below
  * (I don't guarantee that I identified 100% of them, each missed pattern would result in a bug), you can use:
  *
@@ -34,8 +34,7 @@ import java.util.List;
  *  The spare doesn't matter in last frame for the third attempt. Third attempt is never calculated with any bonus multiplier.
  *
  *  This denotes general idea, it's very mundane and test harness kept increasing as I discovered edge cases, until I switched to developing something more robust as
- *  I am still not sure if I caught all edge cases. But I would believe 99% of cases are captured, there one which could be missing
- *  is possibly near the last frame transition as it was very complex one as we can see some mid frames patterns are breaking, like consecutive strikes.
+ *  I am still not sure if I caught all edge cases. But I would believe 99% of cases are captured.
  *
  *  The code itself is rudimentary, but helped me immensely understand the game mechanics and gave a better
  *  idea how to handle it. I am now trying LinkedList of Frames and some partial use of Observer pattern which is what I am working on right now.
