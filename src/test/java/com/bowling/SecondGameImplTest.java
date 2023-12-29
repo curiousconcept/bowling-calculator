@@ -242,7 +242,6 @@ class SecondGameImplTest  {
        int counter = 0;
 
         for (int i = 0; i < timesToRoll; i++) {
-            System.out.println("CALLING ROLL " + ++counter +" with value " + pins);
             game.roll(pins);
         }
     }

@@ -15,8 +15,6 @@ public class StdFrame extends LinkedFrame implements BonusScoreCompleteFramesLis
             setFirstAttempt(pins);
 
             if (isStrike(getFirstAttempt().orElseThrow())) {
-//                this.bonusStateTracker = BonusStateTrackerImpl.ofStrike();
-//                this.getBonusStateTracker().map(BonusStateTracker::getNumberOfBonusBowls).ifPresent(this::subscribe);
                 initializeBonusStateTracker(BonusStateTrackerImpl.ofStrike());
             } else {
                 return false;
@@ -25,9 +23,6 @@ public class StdFrame extends LinkedFrame implements BonusScoreCompleteFramesLis
             setSecondAttempt(pins);
 
             if (isSpare(true)) {
-//                this.bonusStateTracker = BonusStateTrackerImpl.ofSpare();
-//                this.getBonusStateTracker().map(BonusStateTracker::getNumberOfBonusBowls).ifPresent(this::subscribe);
-
                 initializeBonusStateTracker(BonusStateTrackerImpl.ofSpare());
             }
         }
