@@ -1,7 +1,5 @@
 package com.bowling.game.second.frame;
 
-import com.bowling.game.second.frame.util.Pair;
-
 import java.util.Optional;
 
 public class FinalFrame extends LinkedFrame {

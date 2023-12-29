@@ -15,8 +15,9 @@ public class StdFrame extends LinkedFrame implements BonusScoreCompleteFramesLis
             setFirstAttempt(pins);
 
             if (isStrike(getFirstAttempt().orElseThrow())) {
-                this.bonusStateTracker = BonusStateTrackerImpl.ofStrike();
-                this.getBonusStateTracker().map(BonusStateTracker::getNumberOfBonusBowls).ifPresent(this::subscribe);
+//                this.bonusStateTracker = BonusStateTrackerImpl.ofStrike();
+//                this.getBonusStateTracker().map(BonusStateTracker::getNumberOfBonusBowls).ifPresent(this::subscribe);
+                initializeBonusStateTracker(BonusStateTrackerImpl.ofStrike());
             } else {
                 return false;
             }
@@ -24,18 +25,14 @@ public class StdFrame extends LinkedFrame implements BonusScoreCompleteFramesLis
             setSecondAttempt(pins);
 
             if (isSpare(true)) {
-                this.bonusStateTracker = BonusStateTrackerImpl.ofSpare();
-                this.getBonusStateTracker().map(BonusStateTracker::getNumberOfBonusBowls).ifPresent(this::subscribe);
+//                this.bonusStateTracker = BonusStateTrackerImpl.ofSpare();
+//                this.getBonusStateTracker().map(BonusStateTracker::getNumberOfBonusBowls).ifPresent(this::subscribe);
+
+                initializeBonusStateTracker(BonusStateTrackerImpl.ofSpare());
             }
         }
 
-        // check if this is a problem for long running dry '0' game, if it is we'd need to use frame index
-        if (getTotalScore() == 0)
-            setTotalScore(getFrameTotal());
-        else
-            setTotalScore(getTotalScore() + getFrameTotal());
-
-        this.nextFrame().ifPresent(stdFrame -> stdFrame.updateCurrentAndDownstream(getTotalScore()));
+        updateTotalScore();
 
         return true;
     }
@@ -52,12 +49,10 @@ public class StdFrame extends LinkedFrame implements BonusScoreCompleteFramesLis
     @Override
     public void subscribe(int numberOfBonusBowls) {
         LinkedFrame currentFrame = this;
-        int i = 0;
 
-        while (i < numberOfBonusBowls && currentFrame.nextFrame().isPresent()) {
+        for (int i = 0; i < numberOfBonusBowls && currentFrame.nextFrame().isPresent(); i++) {
             currentFrame = currentFrame.nextFrame().get();
             currentFrame.acceptSubscriber(this);
-            i++;
         }
     }
 
@@ -68,15 +63,22 @@ public class StdFrame extends LinkedFrame implements BonusScoreCompleteFramesLis
 
 
         this.nextFrame().ifPresent(stdFrame -> getBonusStateTracker().flatMap(tracker -> tracker.getBonusToApply(bowlBonusContainer))
-                                                                     .map(bonus-> {
-                                                                         setTotalScore(getTotalScore()+bonus);
-                                                                         return getTotalScore();})
+                                                                     .map(bonus -> {
+                                                                         setTotalScore(getTotalScore() + bonus);
+                                                                         return getTotalScore();
+                                                                     })
                                                                      .ifPresent(stdFrame::updateCurrentAndDownstream));
     }
 
     Optional<BonusStateTracker> getBonusStateTracker() {
         return Optional.ofNullable(bonusStateTracker);
     }
+
+    private void initializeBonusStateTracker(BonusStateTracker tracker) {
+        this.bonusStateTracker = tracker;
+        getBonusStateTracker().map(BonusStateTracker::getNumberOfBonusBowls).ifPresent(this::subscribe);
+    }
+
 
     /**
      * Returns head as first parameter and tail as second
@@ -96,6 +98,12 @@ public class StdFrame extends LinkedFrame implements BonusScoreCompleteFramesLis
             current = nextObject;
         }
         return Pair.of(head, current);
+    }
+
+    private void updateTotalScore() {
+        int totalScore = getTotalScore() + getFrameTotal();
+        setTotalScore(totalScore);
+        nextFrame().ifPresent(stdFrame -> stdFrame.updateCurrentAndDownstream(getTotalScore()));
     }
 
 }

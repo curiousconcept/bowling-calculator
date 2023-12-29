@@ -214,6 +214,21 @@ class SecondGameImplTest  {
         assertEquals(30, game.score());
     }
 
+    @Test
+    void checkMegaGameContainingDifferentCombos(){
+        game.roll(10);
+        game.roll(10);
+        game.roll(10);
+
+        game.roll(6);
+        game.roll(4);
+
+        game.roll(0);
+        game.roll(4);
+
+        assertEquals(90, game.score());
+    }
+
 
     private void rollZeroesUpToTheLastFrame() {
         rollSamePinsNumberOfTimes(0, 18);

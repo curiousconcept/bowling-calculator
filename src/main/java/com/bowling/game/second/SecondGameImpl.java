@@ -8,15 +8,14 @@ import com.bowling.game.second.frame.util.Pair;
 
 public class SecondGameImpl implements Game {
 
-
     private LinkedFrame currentFrame;
 
     boolean gameOver;
 
     public SecondGameImpl() {
-        Pair<StdFrame,StdFrame> frames = StdFrame.createLinkedNumberOfFrames(9);
-        FinalFrame.appendNewTail(frames.getSecond());
-        currentFrame = frames.getFirst();
+        Pair<StdFrame,StdFrame> headAndTail = StdFrame.createLinkedNumberOfFrames(9);
+        FinalFrame.appendNewTail(headAndTail.getSecond());
+        currentFrame = headAndTail.getFirst();
     }
 
     @Override
@@ -43,12 +42,5 @@ public class SecondGameImpl implements Game {
     @Override
     public int score() {
         return currentFrame.getTotalScore();
-    }
-
-    public static void main(String[] args) {
-
-
-
-
     }
 }

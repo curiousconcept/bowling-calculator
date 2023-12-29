@@ -55,8 +55,10 @@ public abstract class LinkedFrame implements DynamicScoreCalculator, BonusScoreC
             defaultActionOnAccessingCompleteFrameIllegally();
 
         this.frameComplete = roll(pins);
-        System.out.println(this.index + " " + this.getClass().getSimpleName() + " " + this.getFrameTotal() + " SEC_AT " +
-        " First Attempt " + getFirstAttempt() + " Second Attempt "+ getSecondAttempt());
+
+        // TODO Add debug
+        // System.out.println(this.index + " " + this.getClass().getSimpleName() + " " + this.getFrameTotal() + " SEC_AT " +
+       // " First Attempt " + getFirstAttempt() + " Second Attempt "+ getSecondAttempt());
 
         if (frameComplete) {
             notifySubscribersOfFrameComplete();
