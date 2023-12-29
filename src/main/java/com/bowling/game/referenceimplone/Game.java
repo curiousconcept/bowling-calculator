@@ -1,7 +1,6 @@
 package com.bowling.game.referenceimplone;
 
-// NOT MINE IMPLEMENTATION
-
+// REFERENCE IMPLEMENTATION
 public class Game implements com.bowling.game.Game
 {
     public int score()

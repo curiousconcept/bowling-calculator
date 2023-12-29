@@ -1,6 +1,6 @@
 package com.bowling.game.referenceimpltwo;
 
-// NOT MINE IMPLEMENTATION
+// REFERENCE IMPLEMENTATION
 public class Game implements com.bowling.game.Game {
 
     private int rolls[] = new int[21];
