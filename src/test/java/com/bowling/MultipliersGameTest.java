@@ -9,6 +9,6 @@ class MultipliersGameTest extends AbstractGameTest {
 
     @Override
     Game createGame() {
-        return new MultipliersPatternGame();
+        return new com.bowling.game.referenceimpltwo.Game();
     }
 }

@@ -23,6 +23,7 @@ public class SecondGameImpl implements Game {
 
         if(gameOver){
             System.out.println("Game over your final score is: " + currentFrame.getTotalScore());
+            return;
         }
 
         boolean frameFinished = currentFrame.rollAndNotify(pins);
